@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Plan - Og Money App Gifting Feature</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/js-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Og Money App</h1>
+                <p>Gifting Feature Documentation</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="prd.html">PRD</a></li>
+                    <li><a href="technical-plan.html" class="active">Technical Plan</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="document-page">
+        <aside class="sidebar">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction</a></li>
+                <li><a href="#system-architecture">2. System Architecture</a></li>
+                <li><a href="#data-models">3. Data Models and Database Schema</a></li>
+                <li><a href="#api-specifications">4. API Specifications</a></li>
+                <li><a href="#security-considerations">5. Security Considerations</a></li>
+                <li><a href="#testing-strategy">6. Testing Strategy</a></li>
+                <li><a href="#implementation-timeline">7. Implementation Timeline</a></li>
+                <li><a href="#dependencies-risks">8. Technical Dependencies and Risks</a></li>
+                <li><a href="#monitoring-support">9. Monitoring and Support</a></li>
+                <li><a href="#conclusion">10. Conclusion</a></li>
+                <li><a href="#appendices">Appendices</a></li>
+            </ul>
+        </aside>
+
+        <main class="document-content">
+            <h1>Technical Software Plan</h1>
+            <h2>Gifting Experience Feature for Og Money App</h2>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+
+                <h3>1.1 Purpose</h3>
+                <p>This Technical Software Plan outlines the technical approach, architecture, and implementation strategy for developing the gifting feature for the Og Money App. This document serves as a guide for the development team to implement the requirements specified in the Product Requirements Document (PRD).</p>
+
+                <h3>1.2 Scope</h3>
+                <p>This document covers the system architecture, data models, API specifications, security considerations, testing strategy, implementation timeline, and technical dependencies for the gifting feature.</p>
+
+                <h3>1.3 References</h3>
+                <ul>
+                    <li>Product Requirements Document (PRD) for Gifting Experience Feature</li>
+                    <li>Og Money App existing architecture documentation (assumed)</li>
+                    <li>Og Money App API documentation (assumed)</li>
+                </ul>
+            </section>
+
+            <section id="system-architecture">
+                <h2>2. System Architecture</h2>
+
+                <h3>2.1 High-Level Architecture</h3>
+                <p>The gifting feature will be integrated into the existing Og Money App architecture, following the current architectural patterns. The high-level architecture includes:</p>
+
+                <pre>
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│                 │     │                 │     │                 │
+│  Mobile Client  │◄───►│   API Gateway   │◄───►│ Microservices   │
+│  (Og Money App) │     │                 │     │                 │
+│                 │     │                 │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+                                                        │
+                                                        ▼
+                                               ┌─────────────────┐
+                                               │                 │
+                                               │   Databases     │
+                                               │                 │
+                                               │                 │
+                                               └─────────────────┘
+                </pre>
+
+                <h3>2.2 Component Architecture</h3>
+                <p>The gifting feature will introduce the following new components:</p>
+
+                <h4>2.2.1 Gift Service</h4>
+                <p>A new microservice responsible for managing gift-related operations, including:</p>
+                <ul>
+                    <li>Gift creation</li>
+                    <li>Gift status management</li>
+                    <li>Gift redemption</li>
+                    <li>Gift validation</li>
+                </ul>
+
+                <h4>2.2.2 Notification Service Enhancement</h4>
+                <p>Enhancements to the existing notification service to support:</p>
+                <ul>
+                    <li>Gift receipt notifications</li>
+                    <li>Gift purchase confirmations</li>
+                    <li>Gift redemption confirmations</li>
+                </ul>
+
+                <h4>2.2.3 User Interface Components</h4>
+                <p>New UI components for:</p>
+                <ul>
+                    <li>Gift option on product pages</li>
+                    <li>Recipient information entry</li>
+                    <li>Gift message customization</li>
+                    <li>Gift preview for recipients</li>
+                </ul>
+
+                <h3>2.3 Integration Points</h3>
+                <p>The gifting feature will integrate with the following existing systems:</p>
+
+                <h4>2.3.1 Product Catalog Service</h4>
+                <ul>
+                    <li>To retrieve product information for digital vouchers and gift cards</li>
+                    <li>To check product eligibility for gifting</li>
+                </ul>
+
+                <h4>2.3.2 Payment Processing Service</h4>
+                <ul>
+                    <li>To handle payment for gift purchases</li>
+                </ul>
+
+                <h4>2.3.3 User Management Service</h4>
+                <ul>
+                    <li>To validate user information</li>
+                    <li>To retrieve sender details</li>
+                    <li>To verify recipient information if they are existing users</li>
+                </ul>
+
+                <h4>2.3.4 Notification Service</h4>
+                <ul>
+                    <li>To send notifications to senders and recipients</li>
+                </ul>
+            </section>
+
+            <section id="data-models">
+                <h2>3. Data Models and Database Schema</h2>
+
+                <h3>3.1 Gift Entity</h3>
+                <pre>
+Table: gifts
+- id: UUID (Primary Key)
+- sender_id: UUID (Foreign Key to users)
+- sender_name: VARCHAR(100)
+- sender_mobile: VARCHAR(20)
+- recipient_name: VARCHAR(100)
+- recipient_mobile: VARCHAR(20)
+- product_id: UUID (Foreign Key to products)
+- product_type: ENUM('voucher', 'gift_card')
+- value: DECIMAL(10,2)
+- message: TEXT
+- pin_number: VARCHAR(50) (encrypted)
+- status: ENUM('created', 'sent', 'viewed', 'redeemed')
+- created_at: TIMESTAMP
+- updated_at: TIMESTAMP
+- expires_at: TIMESTAMP
+                </pre>
+
+                <h3>3.2 Gift Notification Entity</h3>
+                <pre>
+Table: gift_notifications
+- id: UUID (Primary Key)
+- gift_id: UUID (Foreign Key to gifts)
+- recipient_type: ENUM('sender', 'recipient')
+- notification_type: ENUM('purchase', 'receipt', 'redemption')
+- status: ENUM('pending', 'sent', 'failed', 'delivered')
+- delivery_attempts: INT
+- last_attempt_at: TIMESTAMP
+- created_at: TIMESTAMP
+- updated_at: TIMESTAMP
+                </pre>
+
+                <h3>3.3 Database Relationships</h3>
+                <pre>
+┌─────────────┐       ┌─────────────┐       ┌─────────────┐
+│             │       │             │       │             │
+│    Users    │◄─────►│    Gifts    │◄─────►│  Products   │
+│             │       │             │       │             │
+└─────────────┘       └─────────────┘       └─────────────┘
+                           │
+                           ▼
+                     ┌─────────────┐
+                     │             │
+                     │    Gift     │
+                     │Notifications│
+                     │             │
+                     └─────────────┘
+                </pre>
+            </section>
+
+            <section id="api-specifications">
+                <h2>4. API Specifications</h2>
+
+                <h3>4.1 Gift Management API</h3>
+
+                <h4>4.1.1 Create Gift</h4>
+                <pre>
+POST /api/v1/gifts
+
+Request:
+{
+  "sender_id": "uuid",
+  "sender_name": "string",
+  "sender_mobile": "string",
+  "recipient_name": "string",
+  "recipient_mobile": "string",
+  "product_id": "uuid",
+  "message": "string",
+  "payment_method_id": "uuid"
+}
+
+Response:
+{
+  "gift_id": "uuid",
+  "status": "created",
+  "created_at": "timestamp"
+}
+                </pre>
+
+                <h4>4.1.2 Get Gift Details (Sender)</h4>
+                <pre>
+GET /api/v1/gifts/{gift_id}
+
+Response:
+{
+  "gift_id": "uuid",
+  "sender_name": "string",
+  "recipient_name": "string",
+  "recipient_mobile": "string (masked)",
+  "product_name": "string",
+  "product_type": "voucher|gift_card",
+  "value": "decimal",
+  "message": "string",
+  "status": "created|sent|viewed|redeemed",
+  "created_at": "timestamp"
+}
+                </pre>
+
+                <h4>4.1.3 Get Gift Details (Recipient)</h4>
+                <pre>
+GET /api/v1/gifts/received/{gift_id}
+
+Response:
+{
+  "gift_id": "uuid",
+  "sender_name": "string",
+  "product_name": "string",
+  "product_type": "voucher|gift_card",
+  "value": "decimal",
+  "message": "string",
+  "pin_number": "string",
+  "status": "sent|viewed|redeemed",
+  "created_at": "timestamp",
+  "expires_at": "timestamp"
+}
+                </pre>
+
+                <h4>4.1.4 Update Gift Status</h4>
+                <pre>
+PATCH /api/v1/gifts/{gift_id}/status
+
+Request:
+{
+  "status": "viewed|redeemed"
+}
+
+Response:
+{
+  "gift_id": "uuid",
+  "status": "viewed|redeemed",
+  "updated_at": "timestamp"
+}
+                </pre>
+
+                <h3>4.2 Notification API</h3>
+
+                <h4>4.2.1 Send Gift Notification</h4>
+                <pre>
+POST /api/v1/notifications/gift
+
+Request:
+{
+  "gift_id": "uuid",
+  "recipient_type": "sender|recipient",
+  "notification_type": "purchase|receipt|redemption"
+}
+
+Response:
+{
+  "notification_id": "uuid",
+  "status": "pending|sent",
+  "created_at": "timestamp"
+}
+                </pre>
+
+                <h4>4.2.2 Get Notification Status</h4>
+                <pre>
+GET /api/v1/notifications/gift/{notification_id}
+
+Response:
+{
+  "notification_id": "uuid",
+  "gift_id": "uuid",
+  "status": "pending|sent|failed|delivered",
+  "delivery_attempts": "integer",
+  "last_attempt_at": "timestamp",
+  "created_at": "timestamp"
+}
+                </pre>
+            </section>
+
+            <section id="security-considerations">
+                <h2>5. Security Considerations</h2>
+
+                <h3>5.1 Data Protection</h3>
+
+                <h4>5.1.1 Sensitive Data Encryption</h4>
+                <ul>
+                    <li>Gift pin numbers must be encrypted at rest using AES-256 encryption</li>
+                    <li>All personal information must be encrypted at rest</li>
+                    <li>All data in transit must be encrypted using TLS 1.3</li>
+                </ul>
+
+                <h4>5.1.2 Data Access Controls</h4>
+                <ul>
+                    <li>Access to gift data must be restricted based on user roles</li>
+                    <li>Recipients should only be able to access their own gifts</li>
+                    <li>Senders should only be able to access gifts they have sent</li>
+                    <li>Administrative access must be logged and audited</li>
+                </ul>
+
+                <h3>5.2 Authentication and Authorization</h3>
+
+                <h4>5.2.1 Recipient Authentication</h4>
+                <ul>
+                    <li>Recipients must verify their mobile number before accessing gift details</li>
+                    <li>One-time password (OTP) verification should be implemented for gift access</li>
+                    <li>Session tokens for gift access should have a short expiration time</li>
+                </ul>
+
+                <h4>5.2.2 API Security</h4>
+                <ul>
+                    <li>All API endpoints must be protected with OAuth 2.0</li>
+                    <li>Rate limiting must be implemented to prevent abuse</li>
+                    <li>Input validation must be performed on all API requests</li>
+                </ul>
+
+                <h3>5.3 Fraud Prevention</h3>
+
+                <h4>5.3.1 Gift Redemption Controls</h4>
+                <ul>
+                    <li>Implement measures to prevent multiple redemptions of the same gift</li>
+                    <li>Track unusual patterns of gift creation or redemption</li>
+                    <li>Implement velocity checks for gift purchases</li>
+                </ul>
+            </section>
+
+            <section id="testing-strategy">
+                <h2>6. Testing Strategy</h2>
+
+                <h3>6.1 Unit Testing</h3>
+
+                <h4>6.1.1 Component Tests</h4>
+                <ul>
+                    <li>Test each new component in isolation</li>
+                    <li>Mock dependencies to ensure focused testing</li>
+                    <li>Achieve at least 80% code coverage</li>
+                </ul>
+
+                <h4>6.1.2 Test Cases</h4>
+                <ul>
+                    <li>Test gift creation with valid and invalid data</li>
+                    <li>Test gift status updates</li>
+                    <li>Test notification generation</li>
+                    <li>Test gift redemption logic</li>
+                </ul>
+
+                <h3>6.2 Integration Testing</h3>
+
+                <h4>6.2.1 Service Integration Tests</h4>
+                <ul>
+                    <li>Test interaction between Gift Service and other services</li>
+                    <li>Test notification delivery</li>
+                    <li>Test database operations</li>
+                </ul>
+
+                <h4>6.2.2 API Integration Tests</h4>
+                <ul>
+                    <li>Test all API endpoints</li>
+                    <li>Verify request validation</li>
+                    <li>Verify response formats</li>
+                    <li>Test error handling</li>
+                </ul>
+
+                <h3>6.3 End-to-End Testing</h3>
+
+                <h4>6.3.1 User Flow Tests</h4>
+                <ul>
+                    <li>Test complete gift purchase flow</li>
+                    <li>Test gift receipt and viewing</li>
+                    <li>Test gift redemption</li>
+                    <li>Test notification delivery to both sender and recipient</li>
+                </ul>
+
+                <h4>6.3.2 Cross-Platform Tests</h4>
+                <ul>
+                    <li>Test on different mobile platforms (iOS, Android)</li>
+                    <li>Test on different device sizes</li>
+                    <li>Test with different network conditions</li>
+                </ul>
+
+                <h3>6.4 Security Testing</h3>
+
+                <h4>6.4.1 Penetration Testing</h4>
+                <ul>
+                    <li>Conduct penetration testing on new API endpoints</li>
+                    <li>Test for common vulnerabilities (OWASP Top 10)</li>
+                    <li>Verify encryption implementation</li>
+                </ul>
+
+                <h4>6.4.2 Data Privacy Testing</h4>
+                <ul>
+                    <li>Verify proper handling of personal information</li>
+                    <li>Test data access controls</li>
+                    <li>Verify data is properly encrypted</li>
+                </ul>
+            </section>
+
+            <section id="implementation-timeline">
+                <h2>7. Implementation Timeline</h2>
+
+                <h3>7.1 Phase 1: Planning and Design (2 weeks)</h3>
+                <ul>
+                    <li>Finalize technical specifications</li>
+                    <li>Create detailed component designs</li>
+                    <li>Design database schema</li>
+                    <li>Define API contracts</li>
+                </ul>
+
+                <h3>7.2 Phase 2: Backend Development (3 weeks)</h3>
+                <ul>
+                    <li>Implement Gift Service</li>
+                    <li>Enhance Notification Service</li>
+                    <li>Implement database schema</li>
+                    <li>Develop API endpoints</li>
+                    <li>Implement security measures</li>
+                </ul>
+
+                <h3>7.3 Phase 3: Frontend Development (3 weeks)</h3>
+                <ul>
+                    <li>Implement gift option on product pages</li>
+                    <li>Develop recipient information entry UI</li>
+                    <li>Create gift message customization UI</li>
+                    <li>Implement gift preview interface</li>
+                    <li>Integrate with backend APIs</li>
+                </ul>
+
+                <h3>7.4 Phase 4: Testing and QA (2 weeks)</h3>
+                <ul>
+                    <li>Conduct unit testing</li>
+                    <li>Perform integration testing</li>
+                    <li>Execute end-to-end testing</li>
+                    <li>Conduct security testing</li>
+                    <li>Fix identified issues</li>
+                </ul>
+
+                <h3>7.5 Phase 5: Deployment and Monitoring (1 week)</h3>
+                <ul>
+                    <li>Deploy to staging environment</li>
+                    <li>Conduct final validation</li>
+                    <li>Deploy to production</li>
+                    <li>Monitor system performance</li>
+                    <li>Address any production issues</li>
+                </ul>
+            </section>
+
+            <section id="dependencies-risks">
+                <h2>8. Technical Dependencies and Risks</h2>
+
+                <h3>8.1 Dependencies</h3>
+
+                <h4>8.1.1 External Dependencies</h4>
+                <ul>
+                    <li>SMS gateway service for notifications</li>
+                    <li>Payment processing service</li>
+                    <li>Product catalog service</li>
+                </ul>
+
+                <h4>8.1.2 Internal Dependencies</h4>
+                <ul>
+                    <li>User management service</li>
+                    <li>Existing notification infrastructure</li>
+                    <li>Authentication and authorization services</li>
+                </ul>
+
+                <h3>8.2 Technical Risks</h3>
+
+                <h4>8.2.1 Integration Risks</h4>
+                <p>Risk: Integration with existing services may be more complex than anticipated</p>
+                <p>Mitigation: Conduct thorough analysis of existing services, create detailed integration plans, and implement incremental integration with testing at each step</p>
+
+                <h4>8.2.2 Performance Risks</h4>
+                <p>Risk: Gift purchases may create additional load on the system, especially during peak periods</p>
+                <p>Mitigation: Implement caching strategies, optimize database queries, and conduct load testing to identify bottlenecks</p>
+
+                <h4>8.2.3 Security Risks</h4>
+                <p>Risk: Handling sensitive gift information introduces security concerns</p>
+                <p>Mitigation: Implement robust encryption, follow security best practices, and conduct regular security audits</p>
+
+                <h4>8.2.4 Notification Delivery Risks</h4>
+                <p>Risk: Notification delivery failures could impact user experience</p>
+                <p>Mitigation: Implement retry mechanisms, provide alternative notification channels, and monitor notification delivery rates</p>
+            </section>
+
+            <section id="monitoring-support">
+                <h2>9. Monitoring and Support</h2>
+
+                <h3>9.1 Monitoring Strategy</h3>
+
+                <h4>9.1.1 Performance Monitoring</h4>
+                <ul>
+                    <li>Monitor API response times</li>
+                    <li>Track database query performance</li>
+                    <li>Monitor system resource utilization</li>
+                </ul>
+
+                <h4>9.1.2 Error Monitoring</h4>
+                <ul>
+                    <li>Implement centralized error logging</li>
+                    <li>Set up alerts for critical errors</li>
+                    <li>Track error rates and patterns</li>
+                </ul>
+
+                <h4>9.1.3 Business Metrics</h4>
+                <ul>
+                    <li>Monitor gift purchase rates</li>
+                    <li>Track gift redemption rates</li>
+                    <li>Measure notification delivery success rates</li>
+                </ul>
+
+                <h3>9.2 Support Plan</h3>
+
+                <h4>9.2.1 Issue Resolution Process</h4>
+                <ul>
+                    <li>Define severity levels for different types of issues</li>
+                    <li>Establish response time targets based on severity</li>
+                    <li>Create escalation paths for critical issues</li>
+                </ul>
+
+                <h4>9.2.2 User Support</h4>
+                <ul>
+                    <li>Provide documentation for customer support team</li>
+                    <li>Create FAQ for common user questions</li>
+                    <li>Implement in-app help for the gifting feature</li>
+                </ul>
+            </section>
+
+            <section id="conclusion">
+                <h2>10. Conclusion</h2>
+                <p>This Technical Software Plan provides a comprehensive approach to implementing the gifting feature for the Og Money App. By following this plan, the development team will be able to deliver a secure, reliable, and user-friendly gifting experience that enhances the value of the Og Money App for its users.</p>
+                <p>The plan addresses all the requirements specified in the Product Requirements Document while providing technical details necessary for implementation. It also identifies potential risks and provides mitigation strategies to ensure successful delivery of the feature.</p>
+            </section>
+
+            <section id="appendices">
+                <h2>Appendices</h2>
+
+                <h3>Appendix A: API Documentation</h3>
+                <p>[Detailed API documentation will be developed during implementation]</p>
+
+                <h3>Appendix B: Database Schema Diagrams</h3>
+                <p>[Detailed database schema diagrams will be developed during implementation]</p>
+
+                <h3>Appendix C: Component Diagrams</h3>
+                <p>[Detailed component diagrams will be developed during implementation]</p>
+            </section>
+        </main>
+    </div>
+
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Og Money App - Gifting Feature Documentation</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

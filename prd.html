@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD - Og Money App Gifting Feature</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/js-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Og Money App</h1>
+                <p>Gifting Feature Documentation</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="prd.html" class="active">PRD</a></li>
+                    <li><a href="technical-plan.html">Technical Plan</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="document-page">
+        <aside class="sidebar">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction</a>
+                    <ul>
+                        <li><a href="#purpose">1.1 Purpose</a></li>
+                        <li><a href="#scope">1.2 Scope</a></li>
+                        <li><a href="#definitions">1.3 Definitions and Acronyms</a></li>
+                    </ul>
+                </li>
+                <li><a href="#product-overview">2. Product Overview</a>
+                    <ul>
+                        <li><a href="#product-perspective">2.1 Product Perspective</a></li>
+                        <li><a href="#product-features">2.2 Product Features</a></li>
+                        <li><a href="#user-classes">2.3 User Classes and Characteristics</a></li>
+                        <li><a href="#operating-environment">2.4 Operating Environment</a></li>
+                        <li><a href="#constraints">2.5 Design and Implementation Constraints</a></li>
+                        <li><a href="#assumptions">2.6 Assumptions and Dependencies</a></li>
+                    </ul>
+                </li>
+                <li><a href="#specific-requirements">3. Specific Requirements</a>
+                    <ul>
+                        <li><a href="#user-flow">3.1 User Flow Requirements</a></li>
+                        <li><a href="#backend">3.2 Backend Requirements</a></li>
+                        <li><a href="#frontend">3.3 Frontend Requirements</a></li>
+                        <li><a href="#notifications">3.4 Notification Requirements</a></li>
+                        <li><a href="#testing">3.5 Testing Requirements</a></li>
+                        <li><a href="#documentation">3.6 Documentation Requirements</a></li>
+                    </ul>
+                </li>
+                <li><a href="#non-functional">4. Non-Functional Requirements</a></li>
+                <li><a href="#success-metrics">5. Success Metrics</a></li>
+                <li><a href="#appendices">6. Appendices</a></li>
+            </ul>
+        </aside>
+
+        <main class="document-content">
+            <h1>Product Requirements Document (PRD)</h1>
+            <h2>Gifting Experience Feature for Og Money App</h2>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+
+                <div id="purpose">
+                    <h3>1.1 Purpose</h3>
+                    <p>This Product Requirements Document (PRD) outlines the specifications and requirements for implementing a new gifting feature in the Og Money App. This feature will allow users to purchase digital and gaming vouchers and digital gift cards as gifts for others, enhancing the current purchasing experience.</p>
+                </div>
+
+                <div id="scope">
+                    <h3>1.2 Scope</h3>
+                    <p>The scope of this document covers the requirements, specifications, and user experience for the gifting feature. It includes user flows, backend requirements, frontend modifications, notification systems, testing requirements, and documentation needs.</p>
+                </div>
+
+                <div id="definitions">
+                    <h3>1.3 Definitions and Acronyms</h3>
+                    <ul>
+                        <li><strong>Og Money App</strong>: The existing mobile application that will be enhanced with the gifting feature</li>
+                        <li><strong>Digital Voucher</strong>: Electronic certificates that can be redeemed for specific products or services</li>
+                        <li><strong>Gift Card</strong>: A prepaid stored-value money card that can be used as an alternative to cash for purchases</li>
+                        <li><strong>UI</strong>: User Interface</li>
+                        <li><strong>UX</strong>: User Experience</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="product-overview">
+                <h2>2. Product Overview</h2>
+
+                <div id="product-perspective">
+                    <h3>2.1 Product Perspective</h3>
+                    <p>The gifting feature is an enhancement to the existing Og Money App, which currently allows users to purchase digital and gaming vouchers and gift cards for personal use. This new feature extends the functionality to enable users to purchase these items as gifts for others.</p>
+                </div>
+
+                <div id="product-features">
+                    <h3>2.2 Product Features</h3>
+                    <p>The gifting feature will include:</p>
+                    <ul>
+                        <li>Option to purchase digital vouchers and gift cards as gifts</li>
+                        <li>Ability to specify recipient details</li>
+                        <li>Personalization of gifts with custom messages</li>
+                        <li>Notification system for both senders and recipients</li>
+                        <li>Preview functionality for recipients before redemption</li>
+                    </ul>
+                </div>
+
+                <div id="user-classes">
+                    <h3>2.3 User Classes and Characteristics</h3>
+                    <ul>
+                        <li><strong>Gift Senders</strong>: Existing Og Money App users who want to purchase digital vouchers or gift cards for others</li>
+                        <li><strong>Gift Recipients</strong>: Individuals who receive digital vouchers or gift cards, who may or may not be existing Og Money App users</li>
+                    </ul>
+                </div>
+
+                <div id="operating-environment">
+                    <h3>2.4 Operating Environment</h3>
+                    <p>The gifting feature will operate within the existing Og Money App environment, maintaining compatibility with all currently supported platforms and devices.</p>
+                </div>
+
+                <div id="constraints">
+                    <h3>2.5 Design and Implementation Constraints</h3>
+                    <ul>
+                        <li>Must integrate seamlessly with the existing purchase flow</li>
+                        <li>Must adhere to current security standards and practices</li>
+                        <li>Must maintain the existing user experience while adding new functionality</li>
+                        <li>Must be compatible with existing backend systems</li>
+                    </ul>
+                </div>
+
+                <div id="assumptions">
+                    <h3>2.6 Assumptions and Dependencies</h3>
+                    <ul>
+                        <li>The existing product page and checkout flow can be modified to accommodate the new gifting option</li>
+                        <li>The current notification system can be extended to support gift-related notifications</li>
+                        <li>The backend infrastructure can support the additional data storage and processing requirements</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="specific-requirements">
+                <h2>3. Specific Requirements</h2>
+
+                <div id="user-flow">
+                    <h3>3.1 User Flow Requirements</h3>
+
+                    <h4>3.1.1 Gift Option on Product Page</h4>
+                    <ul>
+                        <li>The product page for each digital voucher and gift card must include a "Gift" option</li>
+                        <li>The "Gift" option must be clearly visible and easily accessible</li>
+                        <li>Selecting the "Gift" option should redirect the user to a gift information entry page</li>
+                    </ul>
+
+                    <h4>3.1.2 Recipient Information Entry</h4>
+                    <ul>
+                        <li>Users must be able to enter the recipient's name and mobile number</li>
+                        <li>Users must be able to enter their own name and mobile number as the sender</li>
+                        <li>The interface must validate the mobile number format to ensure it is valid</li>
+                        <li>The interface must provide clear error messages if validation fails</li>
+                    </ul>
+
+                    <h4>3.1.3 Personalized Message</h4>
+                    <ul>
+                        <li>Users must be able to add a personalized message to accompany the gift</li>
+                        <li>The message input field should have a character limit appropriate for the notification system</li>
+                        <li>The interface should provide a character counter to help users stay within the limit</li>
+                    </ul>
+
+                    <h4>3.1.4 Gift Preview</h4>
+                    <ul>
+                        <li>Recipients must be able to preview the gift details before redemption</li>
+                        <li>The preview must include the gift value, type, and gift pin number</li>
+                        <li>The preview must provide a copy option for the gift pin number</li>
+                        <li>The preview must clearly identify the sender of the gift</li>
+                    </ul>
+                </div>
+
+                <div id="backend">
+                    <h3>3.2 Backend Requirements</h3>
+
+                    <h4>3.2.1 Gift Purchase Handling</h4>
+                    <ul>
+                        <li>The backend must process gift purchases separately from personal purchases</li>
+                        <li>The system must generate a unique identifier for each gift</li>
+                        <li>The system must associate the gift with both the sender and recipient</li>
+                    </ul>
+
+                    <h4>3.2.2 Recipient Information Storage</h4>
+                    <ul>
+                        <li>The backend must securely store recipient information</li>
+                        <li>The system must comply with data protection regulations</li>
+                        <li>The system must implement appropriate access controls for sensitive data</li>
+                    </ul>
+
+                    <h4>3.2.3 Notification System</h4>
+                    <ul>
+                        <li>The backend must trigger notifications to both sender and recipient</li>
+                        <li>The notification system must handle failed delivery attempts and provide retry mechanisms</li>
+                        <li>The system must log all notification events for auditing purposes</li>
+                    </ul>
+
+                    <h4>3.2.4 Gift Viewing Mechanism</h4>
+                    <ul>
+                        <li>The backend must provide an API for recipients to view their gifts</li>
+                        <li>The system must authenticate recipients before allowing access to gift details</li>
+                        <li>The system must track gift status (sent, viewed, redeemed)</li>
+                    </ul>
+                </div>
+
+                <div id="frontend">
+                    <h3>3.3 Frontend Requirements</h3>
+
+                    <h4>3.3.1 UI Modifications</h4>
+                    <ul>
+                        <li>The product page must be modified to include the "Gift" option</li>
+                        <li>The checkout flow must be updated to handle gift purchases</li>
+                        <li>The UI must maintain consistency with the existing app design</li>
+                        <li>The UI must be responsive and work on all supported device sizes</li>
+                    </ul>
+
+                    <h4>3.3.2 Recipient Details Interface</h4>
+                    <ul>
+                        <li>The interface for entering recipient details must be user-friendly</li>
+                        <li>The form must include clear labels and placeholders</li>
+                        <li>The form must provide real-time validation feedback</li>
+                        <li>The form must support auto-fill where appropriate</li>
+                    </ul>
+
+                    <h4>3.3.3 Gift Message Interface</h4>
+                    <ul>
+                        <li>The interface for entering the gift message must be intuitive</li>
+                        <li>The message editor must support basic formatting if applicable</li>
+                        <li>The interface must provide a preview of how the message will appear to the recipient</li>
+                    </ul>
+
+                    <h4>3.3.4 Gift Preview Interface</h4>
+                    <ul>
+                        <li>The gift preview interface must be visually appealing</li>
+                        <li>The interface must clearly display all relevant gift information</li>
+                        <li>The copy functionality for the gift pin must be prominently displayed</li>
+                        <li>The interface must include options to redeem the gift or save it for later</li>
+                    </ul>
+                </div>
+
+                <div id="notifications">
+                    <h3>3.4 Notification Requirements</h3>
+
+                    <h4>3.4.1 Sender Notifications</h4>
+                    <ul>
+                        <li>Senders must receive a confirmation notification after a successful gift purchase</li>
+                        <li>The notification must include the gift details and recipient information</li>
+                        <li>The notification must provide a way to track the gift status</li>
+                    </ul>
+
+                    <h4>3.4.2 Recipient Notifications</h4>
+                    <ul>
+                        <li>Recipients must receive a notification when they receive a gift</li>
+                        <li>The notification must include the sender's name and a preview of the gift</li>
+                        <li>The notification must provide a direct link to view the full gift details</li>
+                    </ul>
+
+                    <h4>3.4.3 Notification Content</h4>
+                    <ul>
+                        <li>Notifications must be concise and informative</li>
+                        <li>Notifications must not expose sensitive information</li>
+                        <li>Notifications must include appropriate call-to-action buttons</li>
+                    </ul>
+                </div>
+
+                <div id="testing">
+                    <h3>3.5 Testing Requirements</h3>
+
+                    <h4>3.5.1 Unit Testing</h4>
+                    <ul>
+                        <li>All new components must have unit tests</li>
+                        <li>Unit tests must cover both success and failure scenarios</li>
+                        <li>Unit tests must achieve at least 80% code coverage</li>
+                    </ul>
+
+                    <h4>3.5.2 Integration Testing</h4>
+                    <ul>
+                        <li>Integration tests must verify the interaction between components</li>
+                        <li>Tests must cover the entire gift purchase and redemption flow</li>
+                        <li>Tests must verify notification delivery and handling</li>
+                    </ul>
+
+                    <h4>3.5.3 End-to-End Testing</h4>
+                    <ul>
+                        <li>End-to-end tests must simulate real user scenarios</li>
+                        <li>Tests must cover the complete user journey from purchase to redemption</li>
+                        <li>Tests must verify the system works correctly across different devices and platforms</li>
+                    </ul>
+                </div>
+
+                <div id="documentation">
+                    <h3>3.6 Documentation Requirements</h3>
+
+                    <h4>3.6.1 User Documentation</h4>
+                    <ul>
+                        <li>Documentation must explain how to use the gifting feature</li>
+                        <li>Documentation must include step-by-step instructions with screenshots</li>
+                        <li>Documentation must address common questions and issues</li>
+                    </ul>
+
+                    <h4>3.6.2 Technical Documentation</h4>
+                    <ul>
+                        <li>Documentation must detail the architectural decisions</li>
+                        <li>Documentation must explain the implementation approach</li>
+                        <li>Documentation must list all assumptions made during development</li>
+                    </ul>
+
+                    <h4>3.6.3 API Documentation</h4>
+                    <ul>
+                        <li>API endpoints must be fully documented</li>
+                        <li>Documentation must include request and response formats</li>
+                        <li>Documentation must provide example usage scenarios</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="non-functional">
+                <h2>4. Non-Functional Requirements</h2>
+
+                <h3>4.1 Performance Requirements</h3>
+                <ul>
+                    <li>The gifting feature must not significantly impact the app's overall performance</li>
+                    <li>Gift purchase processing must complete within 3 seconds under normal conditions</li>
+                    <li>Notifications must be delivered within 1 minute of being triggered</li>
+                </ul>
+
+                <h3>4.2 Security Requirements</h3>
+                <ul>
+                    <li>All sensitive data must be encrypted in transit and at rest</li>
+                    <li>The system must implement appropriate authentication for accessing gift details</li>
+                    <li>The system must prevent unauthorized access to gift information</li>
+                </ul>
+
+                <h3>4.3 Usability Requirements</h3>
+                <ul>
+                    <li>The gifting feature must be intuitive and easy to use</li>
+                    <li>Users must be able to complete a gift purchase in 5 steps or fewer</li>
+                    <li>The interface must provide clear feedback at each step of the process</li>
+                </ul>
+
+                <h3>4.4 Reliability Requirements</h3>
+                <ul>
+                    <li>The gifting feature must have 99.9% uptime</li>
+                    <li>The system must handle peak loads during holiday seasons</li>
+                    <li>The system must include error recovery mechanisms</li>
+                </ul>
+
+                <h3>4.5 Compatibility Requirements</h3>
+                <ul>
+                    <li>The gifting feature must work on all platforms supported by the Og Money App</li>
+                    <li>The feature must be compatible with all supported OS versions</li>
+                    <li>The feature must work correctly on both mobile and tablet devices</li>
+                </ul>
+            </section>
+
+            <section id="success-metrics">
+                <h2>5. Success Metrics</h2>
+
+                <h3>5.1 User Adoption</h3>
+                <ul>
+                    <li>20% of active users should try the gifting feature within the first 3 months</li>
+                    <li>Gift purchases should account for 10% of total digital voucher and gift card sales within 6 months</li>
+                </ul>
+
+                <h3>5.2 User Satisfaction</h3>
+                <ul>
+                    <li>The gifting feature should maintain or improve the app's overall user satisfaction rating</li>
+                    <li>Specific feedback on the gifting feature should be at least 4 out of 5 stars</li>
+                </ul>
+
+                <h3>5.3 Technical Performance</h3>
+                <ul>
+                    <li>The feature should not increase app crash rate</li>
+                    <li>The feature should not significantly increase app load time</li>
+                    <li>Gift purchase success rate should be at least 98%</li>
+                </ul>
+            </section>
+
+            <section id="appendices">
+                <h2>6. Appendices</h2>
+
+                <h3>6.1 User Journey Maps</h3>
+                <p>[To be developed during the design phase]</p>
+
+                <h3>6.2 Wireframes</h3>
+                <p>[To be developed during the design phase]</p>
+
+                <h3>6.3 Related Documents</h3>
+                <ul>
+                    <li>Technical Software Plan</li>
+                    <li>System Architecture Document</li>
+                    <li>API Specifications</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Og Money App - Gifting Feature Documentation</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
